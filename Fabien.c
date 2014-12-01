@@ -18,7 +18,9 @@
 #define FIN_TREFLES 51
 #define N 20
 
+short cartes[52];
 
+/*Cette fonction permet d'afficher une carte en utilisant juste la place de cette carte dans le tableau*/
 void afficher_carte(short num) {
 	char couleur[N];
 	char COEUR[] = "de coeur";
@@ -51,9 +53,13 @@ void afficher_carte(short num) {
 	}
 }
 
-void afficher_carte(short num) {
+/*Cette fonction permet d'afficher les cartes de la Banque, carte cachéé comprise*/
+void afficher_mains_cachee() {
+
 	short banque[4];
-	int i, j, k = 0;
+	int i;
+	int k;
+	int j=0;
 	for(i=0; i< 52; i++) {
 		if (cartes[i] == 1 || cartes[i] == 3) {
 			banque[j] = i;
