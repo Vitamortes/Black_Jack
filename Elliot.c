@@ -11,12 +11,12 @@
 #define DEB_TREFLES 39
 #define FIN_TREFLES 51
 
-short carte[52];
+
 
 void afficher_mains(short joueur){
 	short i;
 	for(i=0; i<52; i++){
-		if(carte[i] ==joueur){
+		if(cartes[i] ==joueur){
 			afficher_carte(i);
 		}
 	}
@@ -25,14 +25,19 @@ void afficher_mains(short joueur){
 
 
 short evaluer_score (short joueur, short carte_recue, short *score){
-	carte[carte_recue]=joueur;
-	if(carte_recue<=FIN_COEURS)
-		*score+=(carte_recue++);
-	else if(carte_recue<=FIN_CARREAUX)
-		*score+=(carte_recue-12);
-	else if(carte_recue<=FIN_PIQUES)
-		*score+=(carte_recue-24);
-	else
-		*score+=(carte_recue-36);
+	cartes[carte_recue]=joueur;
+	if(carte_recue<=FIN_COEURS) {
+		carte_recue ++;
+		*score+=(carte_recue);
+	}else if(carte_recue<=FIN_CARREAUX) {
+		carte_recue -= 12;
+		*score+=(carte_recue);
+	}else if(carte_recue<=FIN_PIQUES) {
+		carte_recue -= 24;
+		*score+=(carte_recue);
+	}else{
+		carte_recue -= 36;
+		*score+=(carte_recue);
+	}
 	return 0;
 }

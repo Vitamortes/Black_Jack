@@ -22,26 +22,25 @@ short	nb_as_banque;
 
 
 int main(){
-    int choix=0;
     short cartebc;
     short carteb;
     short carteJ;
     short *scoreb=NULL;
     short *scoreJ=NULL;
-    
+    int choix = 0;
+
     cartebc=tirer_carte(BANQUE_CACHEE);
-    carteb=tirer_carte(BANQUE);
+	carteb=tirer_carte(BANQUE);
     afficher_mains(BANQUE);
     evaluer_score(BANQUE,carteb,scoreb);
     evaluer_score(BANQUE_CACHEE,cartebc,scoreb);
-    
     carteJ=tirer_carte(JOUEUR);
     evaluer_score(JOUEUR,carteJ,scoreJ);
     carteJ=tirer_carte(JOUEUR);
     afficher_mains(JOUEUR);
     evaluer_score(JOUEUR,carteJ,scoreJ);
     
-	
+
 	printf("Voullez vous choisir de tirer une carte ou pas?\n 1:oui       2:non\n");
 	scanf("%i",&choix);
 	switch(choix){
@@ -70,10 +69,10 @@ int main(){
 				break;
 		default: 	printf("Veuillez choisir si vous desirés une autre carte 1:Oui 2:Non\n");
 					scanf("%i",&choix);
-					break;
+					break;	
+	} 
 	
-	}
-   
+
     if ((*scoreb==21)||(*scoreJ>21)){
         printf("La banque a gagné");
         afficher_mains_cachee();

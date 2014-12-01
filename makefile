@@ -1,4 +1,4 @@
-CC = gcc -Wall
+CC = gcc -Wextra
 OBJ = blackjack.o	Elliot.o	Linus.o	Fabien.o
 
 prog :	$(OBJ)
