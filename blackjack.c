@@ -33,7 +33,7 @@ int main(){
     
 	
 	printf("Voullez vous choisir de tirer une carte ou pas?\n 1:oui       2:non\n");
-	scanf("%i",choix);
+	scanf("%i",&choix);
 	switch(choix){
 		case 1:	choix=0;
 				while(choix!=2){
