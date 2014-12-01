@@ -26,8 +26,8 @@ int main(){
     short cartebc;
     short carteb;
     short carteJ;
-    short scoreb=0;
-    short scoreJ=0;
+    short *scoreb=NULL;
+    short *scoreJ=NULL;
     
     cartebc=tirer_carte(BANQUE_CACHEE);
     carteb=tirer_carte(BANQUE);
@@ -58,12 +58,12 @@ int main(){
 						afficher_mains(JOUEUR);
 					}
 				}
-				if(scoreb<=17){
+				if(*scoreb<=17){
 					carteb=tirer_carte(BANQUE);
 					evaluer_score(BANQUE_CACHEE,cartebc,scoreb);
 				}
 				break;
-		case 2:	while((scoreb<=21)&&(scoreJ<=21)){
+		case 2:	while((*scoreb<=21)&&(*scoreJ<=21)){
 					tirer_carte(BANQUE);
 					tirer_carte(JOUEUR);
 				}
@@ -74,12 +74,13 @@ int main(){
 	
 	}
    
-    if ((scoreb==21)||(scoreJ>21)){
+    if ((*scoreb==21)||(*scoreJ>21)){
         printf("La banque a gagné");
         afficher_mains_cachee();
     }
-    if ((scoreJ==21)||(scoreb>21)){
-        printf("Le joueur a gané");
+    if ((*scoreJ==21)||(*scoreb>21)){
+        printf("Le joueur a gagné");
         afficher_mains_cachee();
     }
+    return 0;
 }
