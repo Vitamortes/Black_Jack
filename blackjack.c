@@ -11,6 +11,16 @@
 *   \version 1.0.0
 */
 
+#define	LIBRE	0
+#define	BANQUE	1
+#define	JOUEUR	2
+#define	BANQUE_CACHEE	3
+short	cartes[52];
+short	nb_as_joueur;
+short	nb_as_banque;
+
+
+
 int main(){
     int choix=0;
     short cartebc;
@@ -19,11 +29,11 @@ int main(){
     short scoreb=0;
     short scoreJ=0;
     
-    cartebc=tirer_carte(BANQUE_cachee);
+    cartebc=tirer_carte(BANQUE_CACHEE);
     carteb=tirer_carte(BANQUE);
     afficher_mains(BANQUE);
     evaluer_score(BANQUE,carteb,scoreb);
-    evaluer_score(BANQUE_cachee,cartebc,scoreb);
+    evaluer_score(BANQUE_CACHEE,cartebc,scoreb);
     
     carteJ=tirer_carte(JOUEUR);
     evaluer_score(JOUEUR,carteJ,scoreJ);
@@ -50,7 +60,7 @@ int main(){
 				}
 				if(scoreb<=17){
 					carteb=tirer_carte(BANQUE);
-					evaluer_score(BANQUE_cachee,cartebc,scoreb);
+					evaluer_score(BANQUE_CACHEE,cartebc,scoreb);
 				}
 				break;
 		case 2:	while((scoreb<=21)&&(scoreJ<=21)){
