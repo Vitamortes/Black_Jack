@@ -7,14 +7,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define	LIBRE	0
-#define	BANQUE	1
-#define	JOUEUR	2
-#define	BANQUE_CACHEE	3
-
-short	cartes[52];
-short	nb_as_joueur;
-short	nb_as_banque;
+#define JOUEUR	2
+short nb_as_joueur;
+short nb_as_banque;
+short cartes[52];
 
 
 /**	\brief Fonction permettant de choisir au hasard une carte du tas de 52 cartes

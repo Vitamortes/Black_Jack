@@ -25,7 +25,7 @@ void afficher_mains(short joueur){
 
 
 short evaluer_score (short joueur, short carte_recue, short *score){
-	cartes[carte_recue]=joueur;
+	carte[carte_recue]=joueur;
 	if(carte_recue<=FIN_COEURS)
 		*score+=(carte_recue++);
 	else if(carte_recue<=FIN_CARREAUX)
