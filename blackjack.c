@@ -11,40 +11,59 @@
 *   \version 1.0.0
 */
 
-#define BANQUE 1
-#define JOUEUR 2
-#define BANQUE_CACHEE 3
-
 int main(){
     int choix=0;
-    int cartebc;
-    int carteb;
-    int carteJ;
+    short cartebc;
+    short carteb;
+    short carteJ;
     short scoreb=0;
     short scoreJ=0;
-
-    cartebc=tirer_carte(BANQUE_CACHEE);
+    
+    cartebc=tirer_carte(BANQUE_cachee);
     carteb=tirer_carte(BANQUE);
     afficher_mains(BANQUE);
-    evaluer_score(BANQUE,carteb,&scoreb);
-    evaluer_score(BANQUE_CACHEE,cartebc,&scoreb);
-
+    evaluer_score(BANQUE,carteb,scoreb);
+    evaluer_score(BANQUE_cachee,cartebc,scoreb);
+    
     carteJ=tirer_carte(JOUEUR);
-    evaluer_score(JOUEUR,carteJ,&scoreJ);
+    evaluer_score(JOUEUR,carteJ,scoreJ);
     carteJ=tirer_carte(JOUEUR);
     afficher_mains(JOUEUR);
-    evaluer_score(JOUEUR,carteJ,&scoreJ);
-
+    evaluer_score(JOUEUR,carteJ,scoreJ);
     
-    while((scoreb<=21)&&(scoreJ<=21)){
-        if(scoreb<=21){
-            tirer_carte(JOUEUR);
-        }
-        if(scoreJ<=21){
-            tirer_carte(BANQUE);
-        }
-     }
-
+	
+	printf("Voullez vous choisir de tirer une carte ou pas?\n 1:oui       2:non\n");
+	scanf("%i",choix);
+	switch(choix){
+		case 1:	choix=0;
+				while(choix!=2){
+					printf("Veuillez choisir si vous desirez une autre carte?\n 1:Oui 2:Non\n");
+					scanf("%i",&choix);
+					while ((choix==1)&&(choix==2)){
+						printf("Saisie incorrecte: 1 pour oui 2 pour non");
+						scanf("%i",&choix);
+					}
+					if (choix==1){
+						carteJ=tirer_carte(JOUEUR);
+						afficher_mains(JOUEUR);
+					}
+				}
+				if(scoreb<=17){
+					carteb=tirer_carte(BANQUE);
+					evaluer_score(BANQUE_cachee,cartebc,scoreb);
+				}
+				break;
+		case 2:	while((scoreb<=21)&&(scoreJ<=21)){
+					tirer_carte(BANQUE);
+					tirer_carte(JOUEUR);
+				}
+				break;
+		default: 	printf("Veuillez choisir si vous desirés une autre carte 1:Oui 2:Non\n");
+					scanf("%i",&choix);
+					break;
+	
+	}
+   
     if ((scoreb==21)||(scoreJ>21)){
         printf("La banque a gagné");
         afficher_mains_cachee();
@@ -53,22 +72,4 @@ int main(){
         printf("Le joueur a gané");
         afficher_mains_cachee();
     }
-
-
-    
-     while(choix!=2){
-        printf("Veuillez choisir si vous desirez une autre carte 1:Oui 2:Non\n");
-        scanf("%i",&choix);
-        while ((choix!=1)&&(choix!=2)){
-            scanf("%i",&choix);
-        }
-        if (choix==1){
-            tirer_carte(JOUEUR);
-        }
-     }
-     if(scoreb<=17){
-        tirer_carte(BANQUE);
-     }
-    
-     return 0;
 }
