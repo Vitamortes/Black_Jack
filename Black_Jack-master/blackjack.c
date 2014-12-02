@@ -32,16 +32,16 @@ int main(){
 
     cartebc=tirer_carte(BANQUE_CACHEE);
     carteb=tirer_carte(BANQUE);
-    evaluer_score(BANQUE,carteb,&scoreb);
+    evaluer_score(BANQUE,carteb, scoreb);
     afficher_mains(BANQUE);
-    evaluer_score(BANQUE_CACHEE,cartebc,&scoreb);
+    evaluer_score(BANQUE_CACHEE,cartebc, scoreb);
     carteJ=tirer_carte(JOUEUR);
-    evaluer_score(JOUEUR,carteJ,&scoreJ);
+    evaluer_score(JOUEUR,carteJ, scoreJ);
     carteJ=tirer_carte(JOUEUR);
-    evaluer_score(JOUEUR,carteJ,&scoreJ);
+    evaluer_score(JOUEUR,carteJ, scoreJ);
     afficher_mains(JOUEUR);
 
-	printf("Voullez vous choisir de tirer une carte ou pas?\n 1:oui       2:non\n");
+	printf("Voulez vous choisir de tirer une carte ou pas?\n 1:oui       2:non\n");
 	scanf("%i",&choix);
 	
 	while (choix != 2) {
@@ -61,7 +61,7 @@ int main(){
 					}
 					if(scoreb<=17){
 						carteb=tirer_carte(BANQUE);
-						evaluer_score(BANQUE_CACHEE,cartebc,&scoreb);
+						evaluer_score(BANQUE_CACHEE,cartebc, scoreb);
 					}
 					break;
 			case 2:	while((scoreb<=21)&&(scoreJ<=21)){

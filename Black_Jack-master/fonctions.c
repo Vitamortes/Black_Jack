@@ -26,7 +26,7 @@
 
 short nb_as_joueur;
 short nb_as_banque;
-short cartes[52];
+short cartes[52]={0};
 
 /*Cette fonction permet d'afficher une carte en utilisant juste la place de cette carte dans le tableau*/
 void afficher_carte(short num) {
@@ -36,7 +36,8 @@ void afficher_carte(short num) {
 	char PIQUE[N] = "de pique\0";
 	char TREFLE[N] = "de trefle\0";
 	short valeur = num % 13;
-
+	
+	if(valeur==1) valeur ++;
 	if ((num >= DEB_COEURS) && (num <= FIN_COEURS)) {
 		strcpy(couleur, COEUR);
 	} else if ((num >= DEB_CARREAUX) && (num <= FIN_CARREAUX)) {
@@ -58,7 +59,7 @@ void afficher_carte(short num) {
 	} else if (valeur == 12) {
 		printf("ROI %s \n", couleur);
 	} else {
-		printf("%d %s \n", valeur-1, couleur);
+		printf("%d %s \n", valeur, couleur);
 	}
 }
 
@@ -137,23 +138,25 @@ short donner_valeur_carte(short joueur, short carte){
 }
 
 
-short evaluer_score (short joueur, short carte_recue, short *score){
+short evaluer_score (short joueur, short carte_recue, short score){
+	int val_cart= donner_valeur_carte(joueur, carte_recue);
 	
-        if(carte_recue<=FIN_COEURS) {
-                *score+=(donner_valeur_carte(joueur, carte_recue));
-        }else if(carte_recue<=FIN_CARREAUX) {
-                carte_recue -= 12;
-                *score+=(donner_valeur_carte(joueur, carte_recue));
-        }else if(carte_recue<=FIN_PIQUES) {
-                carte_recue -= 25;
-                *score+=(donner_valeur_carte(joueur, carte_recue));
-        }else{
-                carte_recue -= 38;
-                *score+=(donner_valeur_carte(joueur, carte_recue));
-        }
-	if((carte_recue ==0)&& ((*score)+11)<21)
-		*score+=10;
-        return 0;
+	if((val_cart==1) && (score+11)<21)
+		score+=11;
+	else 
+		score+=val_cart;
+	if(joueur==2)
+		while((score>21) && (nb_as_joueur>0)){
+			score-=10;
+			nb_as_joueur--;
+		}
+	else
+		while((score>21) && (nb_as_banque>0)){
+                        score-=10;
+                        nb_as_banque--;
+                }
+
+        return score;
 }
 
 /**	\brief Fonction permettant de choisir au hasard une carte du tas de 52 cartes
@@ -162,7 +165,7 @@ short evaluer_score (short joueur, short carte_recue, short *score){
 short tirer_carte(short joueur){
 	int nontiree=-1;
 	do{
-		nontiree=(rand() % (52-0))+0;
+		nontiree=(rand() % (51-0))+0;
 	}while(cartes[nontiree]!=LIBRE);
 	
 	cartes[nontiree]=joueur;
