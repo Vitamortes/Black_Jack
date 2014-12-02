@@ -1,18 +1,11 @@
-CC = gcc -Wextra
-OBJ = blackjack.o	Elliot.o	Linus.o	Fabien.o
+CC = gcc -Wall
+OBJ = blackjack.o	fonctions.o
 
 prog :	$(OBJ)
 	$(CC) $(OBJ) -o	prog
 
-Fabien.o : Fabien.c Fabien.h
-	$(CC) -c Fabien.c
+fonctions.o : fonctions.c fonctions.h
+	$(CC) -c fonctions.c
 
 blackjack.o : blackjack.c
 	$(CC) -c blackjack.c
-
-Elliot.o : Elliot.c Elliot.h
-	$(CC) -c Elliot.c
-
-Linus.o : Linus.c Linus.h
-	$(CC) -c Linus.c
-
