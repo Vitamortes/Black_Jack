@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define DEB_COEURS 0
 #define FIN_COEURS 12
@@ -21,6 +22,7 @@
 #define	JOUEUR	2
 #define	BANQUE_CACHEE	3
 #define N 20
+
 
 short nb_as_joueur;
 short nb_as_banque;
@@ -82,42 +84,17 @@ void afficher_mains_cachee() {
 
 void afficher_mains(short joueur){
         short i;
+	if(joueur==BANQUE)
+		printf("main de la banque \n");
+
+	if(joueur==JOUEUR)
+		printf("main du joueur \n");  
+
         for(i=0; i<52; i++){
-                if(cartes[i] ==joueur){
-                        afficher_carte(i);
+                if(cartes[i] ==joueur){                 
+			afficher_carte(i);
                 }
         }
-}
-
-
-
-short evaluer_score (short joueur, short carte_recue, short *score){
-        cartes[carte_recue]=joueur;
-        if(carte_recue<=FIN_COEURS) {
-                carte_recue ++;
-                *score+=(carte_recue);
-        }else if(carte_recue<=FIN_CARREAUX) {
-                carte_recue -= 12;
-                *score+=(carte_recue);
-        }else if(carte_recue<=FIN_PIQUES) {
-                carte_recue -= 25;
-                *score+=(carte_recue);
-        }else{
-                carte_recue -= 38;
-                *score+=(carte_recue);
-        }
-        return 0;
-}
-
-
-/**	\brief Fonction permettant de choisir au hasard une carte du tas de 52 cartes
-*/
-
-short tirer_carte(short joueur){
-	int nontiree=-1;
-	while(cartes[nontiree]!=LIBRE)
-		nontiree=(rand() % 52);
-	return nontiree;
 }
 
 
@@ -125,27 +102,9 @@ short tirer_carte(short joueur){
 /**	\brief	Fonction donnant la valeur d'une carte tirée et incrémentant le compteur d'a du joueur possédant la carte en question
 */
 short donner_valeur_carte(short joueur, short carte){
-	short score;
 
-	evaluer_score(joueur, carte, &score);
 	if(carte%13==0){
-		if((score+11)>21){
-			if(joueur==JOUEUR){
-				nb_as_joueur++;
-			}else{
-				nb_as_banque++;
-			}
-			return 11;
-		}
-	}
-	else{
-	
-			if(joueur==JOUEUR){
-				nb_as_joueur++;
-			}else{
-				nb_as_banque++;
-			}
-			return 1;
+		return 1;
 	}
 	if((carte%13)==1){
 		return 2;
@@ -175,4 +134,37 @@ short donner_valeur_carte(short joueur, short carte){
 		return 10;
 	}
 	return 0;
+}
+
+
+short evaluer_score (short joueur, short carte_recue, short *score){
+	
+        if(carte_recue<=FIN_COEURS) {
+                *score+=(donner_valeur_carte(joueur, carte_recue));
+        }else if(carte_recue<=FIN_CARREAUX) {
+                carte_recue -= 12;
+                *score+=(donner_valeur_carte(joueur, carte_recue));
+        }else if(carte_recue<=FIN_PIQUES) {
+                carte_recue -= 25;
+                *score+=(donner_valeur_carte(joueur, carte_recue));
+        }else{
+                carte_recue -= 38;
+                *score+=(donner_valeur_carte(joueur, carte_recue));
+        }
+	if((carte_recue ==0)&& ((*score)+11)<21)
+		*score+=10;
+        return 0;
+}
+
+/**	\brief Fonction permettant de choisir au hasard une carte du tas de 52 cartes
+*/
+
+short tirer_carte(short joueur){
+	int nontiree=-1;
+	do{
+		nontiree=(rand() % (52-0))+0;
+	}while(cartes[nontiree]!=LIBRE);
+	
+	cartes[nontiree]=joueur;
+	return nontiree;
 }
