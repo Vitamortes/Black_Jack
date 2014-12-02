@@ -10,7 +10,7 @@
 #include "fonctions.h"
 
 /** \file blackjack.c \brief le main du blackjack
-*   \author Linus König
+*   \author Linus König, Elliott Candale, Fabien Ciron
 *   \date 22 octobre 2014
 *   \version 1.0.0
 */

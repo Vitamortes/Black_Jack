@@ -16,19 +16,26 @@
 #define DEB_PIQUES 26
 #define FIN_PIQUES 38
 #define DEB_TREFLES 39
-#define FIN_TREFLES 51
+#define FIN_TREFLES 51	/** \brief Définitions des intervalles des différentes couleurs
+*/
+
 #define	LIBRE	0
 #define	BANQUE	1
 #define	JOUEUR	2
-#define	BANQUE_CACHEE	3
+#define	BANQUE_CACHEE	3	/** \brief Définition des numéros des participants
+*/
+
+
 #define N 20
 
 
 short nb_as_joueur;
 short nb_as_banque;
-short cartes[52];
+short cartes[52]; /** \brief Le tableau représentant le paquet de carte
+*/
 
-/*Cette fonction permet d'afficher une carte en utilisant juste la place de cette carte dans le tableau*/
+/** \brief Fonction permettant d'afficher une carte en utilisant juste la place de cette carte dans le tableau
+*/
 void afficher_carte(short num) {
 	char couleur[N];
 	char COEUR[N] = "de coeur\0";
@@ -62,7 +69,8 @@ void afficher_carte(short num) {
 	}
 }
 
-/*Cette fonction permet d'afficher les cartes de la Banque, carte cachéé comprise*/
+/** \brief Fonction permettant  d'afficher les cartes de la Banque, carte cachée comprise
+*/
 void afficher_mains_cachee() {
 
 	short banque[9];
@@ -82,17 +90,27 @@ void afficher_mains_cachee() {
 
 
 
-void afficher_mains(short joueur){
+/** \brief Fonction permettant d'afficher la main d'un joueur
+*/
+void afficher_mains(short player){
         short i;
-        for(i=0; i<52; i++){
-                if(cartes[i] ==joueur){
-                        afficher_carte(i);
-                }
+		if (player == BANQUE) {
+			printf ("main de la banque \n");
+		} else if (player == JOUEUR) {
+			printf ("main du joueur \n");
+		}
+
+		for(i=0; i<52; i++){
+                if(cartes[i] ==player){
+                	afficher_carte(i);
+               }
         }
 }
 
 
 
+/** \brief Fonction permettant d'évaluer le score du joueur
+*/
 short evaluer_score (short joueur, short carte_recue, short *score){
         cartes[carte_recue]=joueur;
         if(carte_recue<=FIN_COEURS) {
