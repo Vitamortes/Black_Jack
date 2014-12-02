@@ -1,5 +1,4 @@
-/** \file affichage.c
-*	\brief Fonctions du BlackJack
+/** \file affichage.c \brief Fonctions du BlackJack
 *   \author Fabien Ciron, Linus Konig, Elliot Candale
 *   \date 01 decembre 2014
 *   \version 2.0.0
@@ -18,25 +17,18 @@
 #define FIN_PIQUES 38
 #define DEB_TREFLES 39
 #define FIN_TREFLES 51
-
-
 #define	LIBRE	0
-#define	BANQUE	1	
+#define	BANQUE	1
 #define	JOUEUR	2
 #define	BANQUE_CACHEE	3
-
-
-
 #define N 20
 
 
-short nb_as_joueur;	/**< Le nombre d'as qu'a tiré le joueur*/
-short nb_as_banque;	/**< Le nombre d'as qu'a tiré la banque*/
-short cartes[52]; /**< Le tableau représentant le paquet de carte*/
+short nb_as_joueur;
+short nb_as_banque;
+short cartes[52];
 
-
-/** \brief Fonction permettant d'afficher une carte en utilisant juste la place de cette carte dans le tableau
-*/
+/*Cette fonction permet d'afficher une carte en utilisant juste la place de cette carte dans le tableau*/
 void afficher_carte(short num) {
 	char couleur[N];
 	char COEUR[N] = "de coeur\0";
@@ -70,8 +62,7 @@ void afficher_carte(short num) {
 	}
 }
 
-/** \brief Fonction permettant  d'afficher les cartes de la Banque, carte cachée comprise
-*/
+/*Cette fonction permet d'afficher les cartes de la Banque, carte cachéé comprise*/
 void afficher_mains_cachee() {
 
 	short banque[9];
@@ -91,54 +82,19 @@ void afficher_mains_cachee() {
 
 
 
-/** \brief Fonction permettant d'afficher la main d'un joueur
-*/
-void afficher_mains(short player){
+void afficher_mains(short joueur){
         short i;
-		if (player == BANQUE) {
-			printf ("main de la banque \n");
-		} else if (player == JOUEUR) {
-			printf ("main du joueur \n");
-		}
+	if(joueur==BANQUE)
+		printf("main de la banque \n");
 
-		for(i=0; i<52; i++){
-                if(cartes[i] ==player){
-                	afficher_carte(i);
-               }
+	if(joueur==JOUEUR)
+		printf("main du joueur \n");  
+
+        for(i=0; i<52; i++){
+                if(cartes[i] ==joueur){                 
+			afficher_carte(i);
+                }
         }
-}
-
-
-
-/** \brief Fonction permettant d'évaluer le score du joueur
-*/
-short evaluer_score (short joueur, short carte_recue, short *score){
-        cartes[carte_recue]=joueur;
-        if(carte_recue<=FIN_COEURS) {
-                carte_recue ++;
-                *score+=(carte_recue);
-        }else if(carte_recue<=FIN_CARREAUX) {
-                carte_recue -= 12;
-                *score+=(carte_recue);
-        }else if(carte_recue<=FIN_PIQUES) {
-                carte_recue -= 25;
-                *score+=(carte_recue);
-        }else{
-                carte_recue -= 38;
-                *score+=(carte_recue);
-        }
-        return 0;
-}
-
-
-/**	\brief Fonction permettant de choisir au hasard une carte du tas de 52 cartes
-*/
-
-short tirer_carte(short joueur){
-	int nontiree=-1;
-	while(cartes[nontiree]!=LIBRE)
-		nontiree=(rand() % (52-0))+0;
-	return nontiree;
 }
 
 
@@ -146,27 +102,9 @@ short tirer_carte(short joueur){
 /**	\brief	Fonction donnant la valeur d'une carte tirée et incrémentant le compteur d'a du joueur possédant la carte en question
 */
 short donner_valeur_carte(short joueur, short carte){
-	short score;
 
-	evaluer_score(joueur, carte, &score);
 	if(carte%13==0){
-		if((score+11)>21){
-			if(joueur==JOUEUR){
-				nb_as_joueur++;
-			}else{
-				nb_as_banque++;
-			}
-			return 11;
-		}
-	}
-	else{
-	
-			if(joueur==JOUEUR){
-				nb_as_joueur++;
-			}else{
-				nb_as_banque++;
-			}
-			return 1;
+		return 1;
 	}
 	if((carte%13)==1){
 		return 2;
@@ -196,4 +134,37 @@ short donner_valeur_carte(short joueur, short carte){
 		return 10;
 	}
 	return 0;
+}
+
+
+short evaluer_score (short joueur, short carte_recue, short *score){
+	
+        if(carte_recue<=FIN_COEURS) {
+                *score+=(donner_valeur_carte(joueur, carte_recue));
+        }else if(carte_recue<=FIN_CARREAUX) {
+                carte_recue -= 12;
+                *score+=(donner_valeur_carte(joueur, carte_recue));
+        }else if(carte_recue<=FIN_PIQUES) {
+                carte_recue -= 25;
+                *score+=(donner_valeur_carte(joueur, carte_recue));
+        }else{
+                carte_recue -= 38;
+                *score+=(donner_valeur_carte(joueur, carte_recue));
+        }
+	if((carte_recue ==0)&& ((*score)+11)<21)
+		*score+=10;
+        return 0;
+}
+
+/**	\brief Fonction permettant de choisir au hasard une carte du tas de 52 cartes
+*/
+
+short tirer_carte(short joueur){
+	int nontiree=-1;
+	do{
+		nontiree=(rand() % (52-0))+0;
+	}while(cartes[nontiree]!=LIBRE);
+	
+	cartes[nontiree]=joueur;
+	return nontiree;
 }

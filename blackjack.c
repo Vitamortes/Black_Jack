@@ -10,15 +10,9 @@
 #include "fonctions.h"
 
 /** \file blackjack.c \brief le main du blackjack
-*   \author Linus König, Elliott Candale, Fabien Ciron
+*   \author Linus König
 *   \date 22 octobre 2014
 *   \version 1.0.0
-*	
-*	\mainpage Index du projet BlackJack par Linus Konig, Elliott Candale et Fabien Ciron
-*	\section Présentation
-* 	Ceci est un projet pour les élèves de L2 SPI de l'Université du Mans.
-*	<br/>
-*	Il a pour but de réaliser un mini-jeu de BlackJack, en terminal, afin de nous apprendre le développement en groupe.
 */
 
 
@@ -37,20 +31,15 @@ int main(){
     int choix = 0;
 
     cartebc=tirer_carte(BANQUE_CACHEE);
-	carteb=tirer_carte(BANQUE);
-    afficher_mains(BANQUE);
+    carteb=tirer_carte(BANQUE);
     evaluer_score(BANQUE,carteb,&scoreb);
+    afficher_mains(BANQUE);
     evaluer_score(BANQUE_CACHEE,cartebc,&scoreb);
-  
-  	printf("banque: %i\n", scoreb);
-	printf("joueur: %i\n", scoreJ);
- 
-  	carteJ=tirer_carte(JOUEUR);
+    carteJ=tirer_carte(JOUEUR);
     evaluer_score(JOUEUR,carteJ,&scoreJ);
-    carteJ=tirer_carte(JOUEUR); 
+    carteJ=tirer_carte(JOUEUR);
     evaluer_score(JOUEUR,carteJ,&scoreJ);
-  	afficher_mains(JOUEUR);
-   
+    afficher_mains(JOUEUR);
 
 	printf("Voullez vous choisir de tirer une carte ou pas?\n 1:oui       2:non\n");
 	scanf("%i",&choix);
@@ -80,7 +69,7 @@ int main(){
 						tirer_carte(JOUEUR);
 					}
 					break;
-			default: 	printf("DEFAULT: Veuillez choisir si vous desirés une autre carte 1:Oui 2:Non\n");
+			default: 	printf("DEFAULT: Veuillez choisir si vous desirez une autre carte 1:Oui 2:Non\n");
 						scanf("%i",&choix);
 						break;	
 		} 
