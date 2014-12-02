@@ -13,6 +13,12 @@
 *   \author Linus König, Elliott Candale, Fabien Ciron
 *   \date 22 octobre 2014
 *   \version 1.0.0
+*	
+*	\mainpage Index du projet BlackJack par Linus Konig, Elliott Candale et Fabien Ciron
+*	\section Présentation
+* 	Ceci est un projet pour les élèves de L2 SPI de l'Université du Mans.
+*	<br/>
+*	Il a pour but de réaliser un mini-jeu de BlackJack, en terminal, afin de nous apprendre le développement en groupe.
 */
 
 

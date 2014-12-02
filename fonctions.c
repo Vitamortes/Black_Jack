@@ -1,4 +1,5 @@
-/** \file affichage.c \brief Fonctions du BlackJack
+/** \file affichage.c
+*	\brief Fonctions du BlackJack
 *   \author Fabien Ciron, Linus Konig, Elliot Candale
 *   \date 01 decembre 2014
 *   \version 2.0.0
@@ -16,23 +17,23 @@
 #define DEB_PIQUES 26
 #define FIN_PIQUES 38
 #define DEB_TREFLES 39
-#define FIN_TREFLES 51	/** \brief Définitions des intervalles des différentes couleurs
-*/
+#define FIN_TREFLES 51
+
 
 #define	LIBRE	0
-#define	BANQUE	1
+#define	BANQUE	1	
 #define	JOUEUR	2
-#define	BANQUE_CACHEE	3	/** \brief Définition des numéros des participants
-*/
+#define	BANQUE_CACHEE	3
+
 
 
 #define N 20
 
 
-short nb_as_joueur;
-short nb_as_banque;
-short cartes[52]; /** \brief Le tableau représentant le paquet de carte
-*/
+short nb_as_joueur;	/**< Le nombre d'as qu'a tiré le joueur*/
+short nb_as_banque;	/**< Le nombre d'as qu'a tiré la banque*/
+short cartes[52]; /**< Le tableau représentant le paquet de carte*/
+
 
 /** \brief Fonction permettant d'afficher une carte en utilisant juste la place de cette carte dans le tableau
 */
