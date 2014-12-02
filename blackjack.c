@@ -41,9 +41,9 @@ int main(){
  
   	carteJ=tirer_carte(JOUEUR);
     evaluer_score(JOUEUR,carteJ,&scoreJ);
-    carteJ=tirer_carte(JOUEUR);
-    afficher_mains(JOUEUR);
+    carteJ=tirer_carte(JOUEUR); 
     evaluer_score(JOUEUR,carteJ,&scoreJ);
+  	afficher_mains(JOUEUR);
    
 
 	printf("Voullez vous choisir de tirer une carte ou pas?\n 1:oui       2:non\n");
