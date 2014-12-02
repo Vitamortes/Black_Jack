@@ -1,11 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
-#define	LIBRE	0
-#define	BANQUE	1
-#define	JOUEUR	2
-#define	BANQUE_CACHEE	3
+#include <math.h>
 #include "fonctions.h"
 
 /** \file blackjack.c \brief le main du blackjack
@@ -14,7 +9,10 @@
 *   \version 1.0.0
 */
 
-
+#define	LIBRE	0
+#define	BANQUE	1
+#define	JOUEUR	2
+#define	BANQUE_CACHEE	3
 short	nb_as_joueur;
 short	nb_as_banque;
 
@@ -24,20 +22,20 @@ int main(){
     short cartebc;
     short carteb;
     short carteJ;
-    short scoreb;
-    short scoreJ;
+    short *scoreb=NULL;
+    short *scoreJ=NULL;
     int choix = 0;
 
     cartebc=tirer_carte(BANQUE_CACHEE);
 	carteb=tirer_carte(BANQUE);
     afficher_mains(BANQUE);
-    evaluer_score(BANQUE,carteb,&scoreb);
-    evaluer_score(BANQUE_CACHEE,cartebc,&scoreb);
+    evaluer_score(BANQUE,carteb,scoreb);
+    evaluer_score(BANQUE_CACHEE,cartebc,scoreb);
     carteJ=tirer_carte(JOUEUR);
-    evaluer_score(JOUEUR,carteJ,&scoreJ);
+    evaluer_score(JOUEUR,carteJ,scoreJ);
     carteJ=tirer_carte(JOUEUR);
     afficher_mains(JOUEUR);
-    evaluer_score(JOUEUR,carteJ,&scoreJ);
+    evaluer_score(JOUEUR,carteJ,scoreJ);
     
 
 	printf("Voullez vous choisir de tirer une carte ou pas?\n 1:oui       2:non\n");
@@ -56,12 +54,12 @@ int main(){
 						afficher_mains(JOUEUR);
 					}
 				}
-				if(scoreb<=17){
+				if(*scoreb<=17){
 					carteb=tirer_carte(BANQUE);
 					evaluer_score(BANQUE_CACHEE,cartebc,scoreb);
 				}
 				break;
-		case 2:	while((scoreb<=21)&&(scoreJ<=21)){
+		case 2:	while((*scoreb<=21)&&(*scoreJ<=21)){
 					tirer_carte(BANQUE);
 					tirer_carte(JOUEUR);
 				}
@@ -72,11 +70,11 @@ int main(){
 	} 
 	
 
-    if ((scoreb==21)||(scoreJ>21)){
+    if ((*scoreb==21)||(*scoreJ>21)){
         printf("La banque a gagné");
         afficher_mains_cachee();
     }
-    if ((scoreJ==21)||(scoreb>21)){
+    if ((*scoreJ==21)||(*scoreb>21)){
         printf("Le joueur a gagné");
         afficher_mains_cachee();
     }
