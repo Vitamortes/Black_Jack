@@ -36,8 +36,10 @@ void afficher_carte(short num) {
 	char PIQUE[N] = "de pique\0";
 	char TREFLE[N] = "de trefle\0";
 	short valeur = num % 13;
-	
-	if(valeur==1) valeur ++;
+
+	valeur ++;
+	printf(" voici la valeur reçue dans afficher carte %i et celle_ci convertie %i\n", num, valeur);
+	if(valeur==1) valeur --;
 	if ((num >= DEB_COEURS) && (num <= FIN_COEURS)) {
 		strcpy(couleur, COEUR);
 	} else if ((num >= DEB_CARREAUX) && (num <= FIN_CARREAUX)) {
@@ -52,11 +54,11 @@ void afficher_carte(short num) {
 
 	if (valeur == 0) {
 		printf("AS %s \n", couleur);
-	} else if (valeur == 10) {
-		printf("VALET %s \n", couleur);
 	} else if (valeur == 11) {
-		printf("DAME %s \n", couleur);
+		printf("VALET %s \n", couleur);
 	} else if (valeur == 12) {
+		printf("DAME %s \n", couleur);
+	} else if (valeur == 13) {
 		printf("ROI %s \n", couleur);
 	} else {
 		printf("%d %s \n", valeur, couleur);
@@ -66,7 +68,7 @@ void afficher_carte(short num) {
 /*Cette fonction permet d'afficher les cartes de la Banque, carte cachéé comprise*/
 void afficher_mains_cachee() {
 
-	short banque[9];
+	short banque[10];
 	int i;
 	int k;
 	int j=0;
@@ -131,7 +133,7 @@ short donner_valeur_carte(short joueur, short carte){
 	if((carte%13)==8){
 		return 9;
 	}
-	if((carte%13==9)||(carte%13==10)||(carte%13==11)||(carte%13==12)){
+	if((carte%13==9)||(carte%13==10)||(carte%13==11)||(carte%13==12)||(carte%13==13)){
 		return 10;
 	}
 	return 0;
@@ -163,11 +165,11 @@ short evaluer_score (short joueur, short carte_recue, short score){
 */
 
 short tirer_carte(short joueur){
-	int nontiree=-1;
+	short nontiree=-1;
 	do{
-		nontiree=(rand() % (51-0))+0;
+		nontiree=(rand() % (51-0));
 	}while(cartes[nontiree]!=LIBRE);
-	
+	printf("random = %i\n", nontiree);
 	cartes[nontiree]=joueur;
 	return nontiree;
 }

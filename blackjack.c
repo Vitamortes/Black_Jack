@@ -31,37 +31,46 @@ int main(){
 	short scoreJ=0;
 	int choix = 0;
 	int arret=0;
+	int stop=0;
 
 	cartebc=tirer_carte(BANQUE_CACHEE);
-	evaluer_score(BANQUE_CACHEE,cartebc, scorebc);
+	scorebc=evaluer_score(BANQUE_CACHEE,cartebc, scorebc);
 	carteJ=tirer_carte(JOUEUR);
+	scoreJ=evaluer_score(JOUEUR,carteJ, scoreJ);
 	carteJ=tirer_carte(JOUEUR);
-	evaluer_score(JOUEUR,carteJ, scoreJ);
-  	while(scoreJ<21 && scorebc< 21){
+	scoreJ=evaluer_score(JOUEUR,carteJ, scoreJ);
+	afficher_mains(JOUEUR);
+  	while((scoreJ<21) || (scorebc< 21) || ((arret==1)&&(stop==1))){
 		if(scorebc<=17){
 			carteb=tirer_carte(BANQUE);
-	 		evaluer_score(BANQUE,carteb, scoreb);
+	 		scoreb=evaluer_score(BANQUE,carteb, scoreb);
 			afficher_mains(BANQUE);
-			evaluer_score(BANQUE_CACHEE,carteb, scorebc);
+			//printf("coucou c'est moi 22222! la banque a %i\n\n", scoreb);
+			printf("le score minimal de la banque est de : %i\n", scoreb);
+			scorebc=evaluer_score(BANQUE_CACHEE,carteb, scorebc);
 		}
-			while((choix!=1)||(choix!=2)){
-				printf("Voulez vous choisir de tirer une carte ou pas?\n 1:oui       2:non\n");
+		else
+			stop=1;
+
+			while((choix!=1)&&(choix!=2)&&(arret!=1)){
+				printf("Voulez vous choisir de tirer une carte ?\n 1:oui       2:non\n");
 				scanf("%i", &choix);
 				if(choix==2)
 					arret=1;
 			}
+			choix=0;
 			if(arret==0){
 				carteJ=tirer_carte(JOUEUR);
-				evaluer_score(JOUEUR,carteJ, scoreJ);
+				scoreJ=evaluer_score(JOUEUR,carteJ, scoreJ);
 				afficher_mains(JOUEUR);
+				printf("votre score est de: %i\n", scoreJ);
 			}
 			
-		 
-	}
+		        printf("le score minimal de la banque est de : %i\n", scoreb);
+		        printf("votre score est de: %i\n", scoreJ);
 
-	printf("le score minimal de la banque est de : %i\n", scoreb);
-	printf("votre score est de: %i\n", scoreJ);
-	if ((scorebc==21)||(scoreJ>21||scoreb > scoreJ)){
+	}
+	if ((scorebc==21)||(scoreJ>21||scorebc > scoreJ)){
         	printf("La banque a gagne !!! \n");
 	}
 	else
