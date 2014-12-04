@@ -28,18 +28,18 @@ short nb_as_joueur;
 short nb_as_banque;
 short cartes[52]={0};
 
-/*Cette fonction permet d'afficher une carte en utilisant juste la place de cette carte dans le tableau*/
+/**	\brief Cette fonction permet d'afficher une carte en utilisant juste la place de cette carte dans le tableau
+*/
 void afficher_carte(short num) {
 	char couleur[N];
 	char COEUR[N] = "de coeur\0";
 	char CARREAU[N] = "de carreau\0";
 	char PIQUE[N] = "de pique\0";
 	char TREFLE[N] = "de trefle\0";
-	short valeur = num % 13;
+	short valeur = num % 13;	/*! Conversion rapide case carte/carte */
 
-	valeur ++;
-	printf(" voici la valeur reçue dans afficher carte %i et celle_ci convertie %i\n", num, valeur);
-	if(valeur==1) valeur --;
+	valeur ++;		/*! On étalonne la valeur obtenue avec celle de la carte voulue */
+	if(valeur==1) valeur --;		/*! Gestion des As */
 	if ((num >= DEB_COEURS) && (num <= FIN_COEURS)) {
 		strcpy(couleur, COEUR);
 	} else if ((num >= DEB_CARREAUX) && (num <= FIN_CARREAUX)) {
@@ -50,9 +50,9 @@ void afficher_carte(short num) {
 		strcpy(couleur, TREFLE);
 	} else {
 		printf("ERREUR");
-	}
+	}					/*! Ici la couleur de la carte à forcément été déterminée*/
 
-	if (valeur == 0) {
+	if (valeur == 0) {			/*! Gestion des cartes particulière*/
 		printf("AS %s \n", couleur);
 	} else if (valeur == 11) {
 		printf("VALET %s \n", couleur);
@@ -65,10 +65,11 @@ void afficher_carte(short num) {
 	}
 }
 
-/*Cette fonction permet d'afficher les cartes de la Banque, carte cachéé comprise*/
+/**	\brief	Cette fonction permet d'afficher les cartes de la Banque, carte cachée comprise
+*/
 void afficher_mains_cachee() {
 
-	short banque[10];
+	short banque[10];			/*! La banque n'aura jamais plus de 11 cartes(calcul savant)*/
 	int i;
 	int k;
 	int j=0;
@@ -78,22 +79,23 @@ void afficher_mains_cachee() {
 			j++;
 		}
 	}
-	for(k = 0; k <= j; k++) {
+	for(k = 0; k <= j; k++) {		/*!affichage de toutes les cartes en rapport avec la banque */
 		afficher_carte(banque[k]);
 	}
 }
 
 
-
+/**	\brief	Cette fonction permet d'afficher la main du joueur en recherchant dans le tableau la valeur du joueur
+*/
 void afficher_mains(short joueur){
         short i;
 	if(joueur==BANQUE)
-		printf("main de la banque \n");
+		printf("\nMain de la banque \n\n\n");
 
 	if(joueur==JOUEUR)
-		printf("main du joueur \n");  
+		printf("\nMain du joueur \n\n\n");  
 
-        for(i=0; i<52; i++){
+        for(i=0; i<52; i++){			/*! affichage de toutes les cartes en rapport avec joueur */
                 if(cartes[i] ==joueur){                 
 			afficher_carte(i);
                 }
@@ -102,9 +104,10 @@ void afficher_mains(short joueur){
 
 
 
-/**	\brief	Fonction donnant la valeur d'une carte tirée et incrémentant le compteur d'a du joueur possédant la carte en question
+/**	\brief	Fonction retournant la valeur d'une carte tirée 
+*	\return la valeur de la carte (entre 1 et 11)
 */
-short donner_valeur_carte(short joueur, short carte){
+short donner_valeur_carte(short carte){
 
 	if(carte%13==0){
 		return 1;
@@ -133,21 +136,23 @@ short donner_valeur_carte(short joueur, short carte){
 	if((carte%13)==8){
 		return 9;
 	}
-	if((carte%13==9)||(carte%13==10)||(carte%13==11)||(carte%13==12)||(carte%13==13)){
+	if((carte%13==9)||(carte%13==10)||(carte%13==11)||(carte%13==12)){
 		return 10;
 	}
 	return 0;
 }
 
-
+/**	\brief	Cette fonction retourne le nouveau score du joueur en fonction de la carte reçue
+*	\return Le score du joueur, actualisé.
+*/
 short evaluer_score (short joueur, short carte_recue, short score){
-	int val_cart= donner_valeur_carte(joueur, carte_recue);
+	int val_cart= donner_valeur_carte(carte_recue);			/*!On recupere la valeur de la carte */
 	
-	if((val_cart==1) && (score+11)<21)
+	if((val_cart==1) && (score+11)<21)					/*!Si c'est un as on gère en fonction de */
 		score+=11;
 	else 
 		score+=val_cart;
-	if(joueur==2)
+	if(joueur==2)								/*!Pour gérer à qui on met ou on enleve des as */
 		while((score>21) && (nb_as_joueur>0)){
 			score-=10;
 			nb_as_joueur--;
@@ -162,14 +167,14 @@ short evaluer_score (short joueur, short carte_recue, short score){
 }
 
 /**	\brief Fonction permettant de choisir au hasard une carte du tas de 52 cartes
+*	\return la case de la carte aléatoire tirée
 */
 
 short tirer_carte(short joueur){
 	short nontiree=-1;
 	do{
-		nontiree=(rand() % (51-0));
+		nontiree=(rand() % (51-0));	/*! on cherche une Carte aléatoire mais différente de toute celles déjà tirées */
 	}while(cartes[nontiree]!=LIBRE);
-	printf("random = %i\n", nontiree);
-	cartes[nontiree]=joueur;
+	cartes[nontiree]=joueur;		/*! on l'assigne au joueur concerné*/
 	return nontiree;
 }
